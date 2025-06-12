@@ -8,6 +8,7 @@ Key Features and Deliverables
 Data Preparation and Transformation:
 Imported and cleaned data from Excel sources.
 Applied data type corrections and handled inconsistent formats.
+Conducted data profiling to determine error, distinct and unique values, and statistical analysis
 Filtered and refined data by excluding refunded purchases.
 Integrated currency exchange data using a Python script to standardize values to USD.
 
@@ -31,6 +32,85 @@ Security and Data Governance:
 Configured row-level security (RLS) for role-based data access.
 Applied data sensitivity labels to classify confidential information.
 Set up data alerts and report subscriptions to keep stakeholders informed in real time.
+
+```Key DAX Measures and Formulas
+Yearly Profit Margin (Calculates the ratio of total profit to net revenue as a percentage.)
+Yearly Profit Margin = 
+DIVIDE(
+    SUM('Sales in USD'[Profit USD]),
+    SUM('Sales in USD'[Net Revenue USD])
+) 
+
+Quarterly Profit (Aggregates total profit for the current quarter.)
+Quarterly Profit = 
+CALCULATE(
+    SUM('Sales in USD'[Profit USD]),
+    DATESQTD('CalendarTable'[Date])
+)
+
+Year-to-Date Profit (Calculates running total profit from the start of the year to the current date.)
+YTD Profit = 
+TOTALYTD(
+    SUM('Sales in USD'[Profit USD]),
+    'CalendarTable'[Date]
+)
+
+Median Sales (Identifies the middle sales value to assess performance stability.)
+Median Sales = 
+MEDIAN('Sales in USD'[Gross Revenue USD])
+
+Calendar Table Creation (DAX) (Creates a comprehensive date table with useful date parts for time intelligence.)
+CalendarTable = 
+ADDCOLUMNS(
+    CALENDAR(DATE(2020, 1, 1), DATE(2023, 12, 31)),
+    "Year", YEAR([Date]),
+    "Month Number", MONTH([Date]),
+    "Month", FORMAT([Date], "MMMM"),
+    "Quarter", QUARTER([Date]),
+    "Weekday", WEEKDAY([Date]),
+    "Day", DAY([Date])
+)
+
+Sales in USD Calculated Table (Converts all sales figures into USD using related exchange rates.)
+Sales in USD = 
+ADDCOLUMNS(
+    Sales,
+    "Country Name", RELATED(Countries[Country]),
+    "Exchange Rate", RELATED('Currency Exchange'[ExchangeRate]),
+    "Exchange Currency", RELATED('Currency Exchange'[Exchange Currency]),
+    "Gross Revenue USD", [Gross Revenue] * RELATED('Currency Exchange'[ExchangeRate]),
+    "Net Revenue USD", [Net Revenue] * RELATED('Currency Exchange'[ExchangeRate]),
+    "Total Tax USD", [Total Tax] * RELATED('Currency Exchange'[ExchangeRate])
+)
+
+Power Query Transformations
+Python Script for Currency Exchange Date
+import pandas as pd
+from io import StringIO
+
+data = """Exchange ID;ExchangeRate;Exchange Currency
+1;1;USD
+2;0,75;GBP
+3;0,85;EUR
+4;3,67;AED
+5;1,3;AUD"""
+df = pd.read_csv(StringIO(data), sep=';')
+
+Power Query M snippet for data type transformation (Assigns correct data types to columns for accurate processing and analysis.)
+#"Changed Type" = Table.TransformColumnTypes(
+    #"Previous Step",
+    {
+        {"OrderID", Int64.Type},
+        {"Gross Product Price", type number},
+        {"Tax Per Product", type number},
+        {"Quantity Purchased", Int64.Type},
+        {"Loyalty Points", Int64.Type},
+        {"Stock", Int64.Type},
+        {"Product Category", type text},
+        {"Rating", type number}
+    }
+)
+```
 
 Tools & Technologies
 Power BI Desktop & Power BI Service: Core platform for data loading, modeling, and visualization.
