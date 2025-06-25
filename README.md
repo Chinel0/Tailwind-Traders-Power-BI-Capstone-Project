@@ -1,4 +1,8 @@
 Tailwind Traders Power BI Capstone Project
+![Executive Dashboard](https://github.com/Chinel0/Tailwind-Traders-Power-BI-Capstone-Project/blob/f4a2b8da43b108a14432fe43dc3e487907a49a77/pbi%20dashboard%20(1).png)
+This dashboard provides a consolidated view of sales, profits, and KPIs across global markets, facilitating strategic decision-making.
+
+---
 Project Overview
 This capstone project is the culmination of my Microsoft Power BI Data Analyst Professional Certificate on Coursera. It demonstrates my ability to apply end-to-end Power BI skills in a realistic business scenario. 
 The project simulates a real-world analytics task where I worked with Tailwind Traders’ sales, purchases, currency exchange, and calendar data to develop interactive reports and executive dashboards.
@@ -11,11 +15,21 @@ Applied data type corrections and handled inconsistent formats.
 Conducted data profiling to determine error, distinct and unique values, and statistical analysis
 Filtered and refined data by excluding refunded purchases.
 Integrated currency exchange data using a Python script to standardize values to USD.
+### 3. Data Profiling Overview  
+![Data Profiling](https://github.com/Chinel0/Tailwind-Traders-Power-BI-Capstone-Project/blob/f4a2b8da43b108a14432fe43dc3e487907a49a77/dprofiling.png)
+Highlights column quality, distinct counts, and statistical summaries used to ensure data integrity before modeling.
+
+---
 
 Data Modeling:
 Designed a snowflake schema connecting Sales, Purchases, Countries, Exchange Rates, and Calendar tables.
 Created and managed relationships with appropriate cardinality and bidirectional filtering.
 Developed a dedicated Calendar table for advanced time intelligence.
+### 2. Data Model — Snowflake Schema  
+![Snowflake Schema](https://github.com/Chinel0/Tailwind-Traders-Power-BI-Capstone-Project/blob/f4a2b8da43b108a14432fe43dc3e487907a49a77/snowflake%20schema%20(1).png)
+Illustrates the structured relationships between sales, purchases, country data, exchange rates, and calendar dimensions.
+
+---
 
 Calculations and DAX Measures:
 Created calculated columns and measures for Gross Revenue, Total Tax, Net Revenue, and Profit.
